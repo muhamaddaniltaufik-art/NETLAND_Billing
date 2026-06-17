@@ -5,6 +5,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head><body>
 <h1>NETLAND Billing</h1>
 <div class="card">
@@ -20,8 +21,39 @@ placeholder="Tanggal Jatuh Tempo (1-31)">
 </select>
 <button onclick="tambah()">Tambah Pelanggan</button>
 </div>
-<div class="toolbar">
+<div class="hero">
+  <h1>🌐 NETLAND Billing</h1>
+  <p>Sistem Manajemen Pelanggan & Tagihan Internet</p>
+</div>
+  <div class="toolbar">
+<div class="stats">
 
+  <div class="stat">
+    <i class="bi bi-people-fill"></i>
+    <h2 id="totalCustomer">0</h2>
+    <p>Total Pelanggan</p>
+  </div>
+
+  <div class="stat">
+    <i class="bi bi-check-circle-fill"></i>
+    <h2 id="totalPaid">0</h2>
+    <p>Lunas</p>
+  </div>
+
+  <div class="stat">
+    <i class="bi bi-exclamation-circle-fill"></i>
+    <h2 id="totalDue">0</h2>
+    <p>Menunggak</p>
+  </div>
+
+  <div class="stat">
+    <i class="bi bi-cash-stack"></i>
+    <h2 id="revenue">Rp0</h2>
+    <p>Pendapatan</p>
+  </div>
+
+</div>
+  
 <input
 id="search"
 placeholder="Cari pelanggan..."
