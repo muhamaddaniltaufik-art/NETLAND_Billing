@@ -19,7 +19,66 @@ placeholder="Tanggal Jatuh Tempo (1-31)">
 </select>
 <button onclick="tambah()">Tambah Pelanggan</button>
 </div>
-<h2>Daftar Pelanggan</h2>
+<div class="toolbar">
+
+<input
+id="search"
+placeholder="Cari pelanggan..."
+onkeyup="render()">
+
+<select
+id="filterStatus"
+onchange="render()">
+
+<option value="Semua">Semua</option>
+<option value="Aktif">Aktif</option>
+<option value="Lunas">Lunas</option>
+<option value="Menunggak">Menunggak</option>
+<option value="Suspend">Suspend</option>
+
+</select>
+
+<button onclick="exportBackup()">
+Backup JSON
+</button>
+
+<button onclick="exportCSV()">
+Export CSV
+</button>
+
+<input
+type="file"
+id="restoreFile">
+
+<button onclick="restoreJSON()">
+Restore
+</button>
+
+</div>
+
+<hr>
+  <div id="dashboard">
+
+<h3>Total Pelanggan:
+<span id="totalCustomer">0</span>
+</h3>
+
+<h3>Lunas:
+<span id="totalPaid">0</span>
+</h3>
+
+<h3>Menunggak:
+<span id="totalLate">0</span>
+</h3>
+
+<h3>Pendapatan Bulan Ini:
+<span id="income">Rp0</span>
+</h3>
+
+</div>
+
+<hr>
+  <h2>Daftar Pelanggan</h2>
 <ul id="list"></ul>
 <script src="app.js"></script>
 </body></html>
