@@ -106,6 +106,8 @@ Invoice
     simpan();
 }
 
+updateDashboard();
+
 function tambah() {
 
     const paket = document.getElementById("paket");
@@ -333,3 +335,42 @@ function exportCSV(){
  a.click();
 }
 
+function invoice(index){
+
+ const p = data[index];
+
+ const { jsPDF } =
+ window.jspdf;
+
+ const doc =
+ new jsPDF();
+
+ doc.text(
+ "NETLAND.ID",
+ 20,
+ 20
+ );
+
+ doc.text(
+ "Nama : "+p.nama,
+ 20,
+ 40
+ );
+
+ doc.text(
+ "Paket : "+p.paketNama,
+ 20,
+ 50
+ );
+
+ doc.text(
+ "Tagihan : Rp "+
+ p.tagihan,
+ 20,
+ 60
+ );
+
+ doc.save(
+ "invoice.pdf"
+ );
+}
