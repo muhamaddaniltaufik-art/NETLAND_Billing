@@ -20,16 +20,48 @@ function statusPelanggan(dueDate) {
 
 function render() {
 
+    let keyword =
+document.getElementById("search")
+?.value
+?.toLowerCase() || "";
+
+let filter =
+document.getElementById(
+"filterStatus"
+)?.value || "Semua";
+    
     let html = '';
 
     data.forEach((p, i) => {
 
+if(
+ !p.nama.toLowerCase()
+ .includes(keyword)
+){
+ return;
+}
+        
         let status = statusPelanggan(
             parseInt(p.dueDate)
         );
 
+        if(
+ filter !== "Semua" &&
+ status !== filter
+){
+ return;
+        }
+
         html += `
         <div class="customer-card">
+
+<button onclick="lihatRiwayat(${i})">
+Riwayat
+</button>
+
+<button onclick="invoice(${i})">
+Invoice
+</button>
 
             <h3>${p.nama}</h3>
 
@@ -173,3 +205,131 @@ render();
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
 }
+
+function updateDashboard(){
+
+ let total = data.length;
+
+ let paid = 0;
+
+ let late = 0;
+
+ data.forEach(c=>{
+
+   let status =
+   statusPelanggan(c);
+
+   if(status==="Lunas")
+      paid++;
+
+   if(
+      status==="Menunggak" ||
+      status==="Suspend"
+   )
+      late++;
+ });
+
+ document.getElementById(
+ "totalCustomer"
+ ).innerText = total;
+
+ document.getElementById(
+ "totalPaid"
+ ).innerText = paid;
+
+ document.getElementById(
+ "totalLate"
+ ).innerText = late;
+
+ document.getElementById(
+ "income"
+ ).innerText =
+ "Rp " +
+ pendapatanBulanIni()
+ .toLocaleString("id-ID");
+}
+
+
+function exportBackup(){
+
+ const blob =
+ new Blob(
+ [JSON.stringify(data)],
+ {type:'application/json'}
+ );
+
+ const a =
+ document.createElement('a');
+
+ a.href =
+ URL.createObjectURL(blob);
+
+ a.download =
+ 'netland_backup.json';
+
+ a.click();
+}
+
+function restoreJSON(){
+
+ const file =
+ document.getElementById(
+ 'restoreFile'
+ ).files[0];
+
+ if(!file) return;
+
+ const reader =
+ new FileReader();
+
+ reader.onload = ()=>{
+
+   data =
+   JSON.parse(
+   reader.result
+   );
+
+   simpan();
+
+   render();
+
+   alert(
+   "Restore berhasil"
+   );
+ };
+
+ reader.readAsText(file);
+}
+
+function exportCSV(){
+
+ let csv =
+ "Nama,WA,Paket,Tagihan\\n";
+
+ data.forEach(p=>{
+
+ csv +=
+ `${p.nama},
+ ${p.wa},
+ ${p.paketNama},
+ ${p.tagihan}\\n`;
+ });
+
+ const blob =
+ new Blob(
+ [csv],
+ {type:'text/csv'}
+ );
+
+ const a =
+ document.createElement('a');
+
+ a.href =
+ URL.createObjectURL(blob);
+
+ a.download =
+ 'pelanggan.csv';
+
+ a.click();
+}
+
